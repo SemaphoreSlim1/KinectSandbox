@@ -88,9 +88,9 @@
     <Compile Include="CaptureModule.cs" />
     <Compile Include="ColorMapping\BlackAndWhiteColorMap.cs" />
     <Compile Include="ColorMapping\CanvasPoint.cs" />
+    <Compile Include="ColorMapping\ConfigurableColorMap.cs" />
     <Compile Include="ColorMapping\IColorMap.cs" />
     <Compile Include="ColorMapping\LayeredColorMap.cs" />
-    <Compile Include="ColorMapping\RGB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\IPreviewViewModel.cs" />
     <Compile Include="ViewModel\PreviewViewModel.cs" />

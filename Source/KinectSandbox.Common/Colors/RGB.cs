@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KinectSandbox.Capture.ColorMapping
+namespace KinectSandbox.Common.Colors
 {
     public struct RGB
     {

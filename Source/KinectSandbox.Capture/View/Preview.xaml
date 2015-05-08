@@ -9,9 +9,9 @@
         <Viewbox>
             <Border BorderBrush="Black" BorderThickness="1">
                 <Image Source="{Binding ImageSource}" Stretch="UniformToFill">
-                    <Image.RenderTransform>
-                        <SkewTransform CenterX="0" CenterY="0" AngleX="-1" AngleY="0" />
-                    </Image.RenderTransform>
+                    <Image.Effect>
+                        <BlurEffect Radius="10" />
+                    </Image.Effect>
                 </Image>
                 <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding BodyPoints}" Height="512" Width="424">
                 <ItemsControl.ItemsPanel>

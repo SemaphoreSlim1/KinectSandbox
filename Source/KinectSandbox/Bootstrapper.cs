@@ -1,4 +1,5 @@
 ﻿using KinectSandbox.Capture;
+using KinectSandbox.ColorPicker;
 using KinectSandbox.View;
 using KinectSandbox.ViewModel;
 using Microsoft.Practices.Prism.Modularity;
@@ -55,7 +56,7 @@ namespace KinectSandbox
             var mc = new ModuleCatalog();
             mc.AddModule(typeof(ViewModelModule));
             mc.AddModule(typeof(CaptureModule));
-            
+            mc.AddModule(typeof(ColorPickerModule));
 
             return mc;
         }

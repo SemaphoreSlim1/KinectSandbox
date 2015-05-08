@@ -29,7 +29,7 @@ namespace KinectSandbox.Capture
             container.RegisterType<IPreview, Preview>();
             container.RegisterType<IPreviewViewModel, PreviewViewModel>();
 
-            container.RegisterType<IColorMap, LayeredColorMap>();
+            container.RegisterType<IColorMap, ConfigurableColorMap>();
 
             regionManager.RegisterViewWithRegion(KnownRegion.Named.KinectPreview, typeof(IPreview));
         }

@@ -12,5 +12,7 @@ namespace KinectSandbox.Common
         public static KnownRegion Named { get { return named; } }
 
         public String KinectPreview { get { return "KinectPreviewRegion"; } }
+
+        public String ColorPicker { get { return "ColorPickerRegion"; } }
     }
 }

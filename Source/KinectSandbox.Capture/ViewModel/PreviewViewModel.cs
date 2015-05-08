@@ -1,5 +1,6 @@
 ﻿using KinectSandbox.Capture.ColorMapping;
 using KinectSandbox.Common;
+using KinectSandbox.Common.Colors;
 using Microsoft.Kinect;
 using Prism.ViewModel;
 using Prism.ViewModel.Initialization;
@@ -136,7 +137,7 @@ namespace KinectSandbox.Capture.ViewModel
             if (Bitmap == null)
             { 
                 InitBitmap();
-                colorMap.Init(depthFrame.DepthMinReliableDistance, depthFrame.DepthMaxReliableDistance, null);
+                colorMap.Init(depthFrame.DepthMinReliableDistance, depthFrame.DepthMaxReliableDistance);
             }
 
             depthFrame.CopyFrameDataToArray(DepthData);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KinectSandbox.Common.Colors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace KinectSandbox.Capture.ColorMapping
         private UInt16 minReliable;
         private UInt16 maxReliable;
 
-        public void Init(UInt16 minReliable, UInt16 maxReliable, IEnumerable<RGB> colors)
+        public void Init(UInt16 minReliable, UInt16 maxReliable)
         {
             this.minReliable = minReliable;
             this.maxReliable = maxReliable;

@@ -8,6 +8,11 @@
                       Height="350" 
                       Width="525">
     <Grid>
-        <ContentControl Margin="10"  prism:RegionManager.RegionName="{Binding Source={StaticResource KnownRegions}, Path=KinectPreview}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".75*"/>
+            <ColumnDefinition Width=".25*" />
+        </Grid.ColumnDefinitions>
+        <ContentControl Margin="10" Grid.Column="0"  prism:RegionManager.RegionName="{Binding Source={StaticResource KnownRegions}, Path=KinectPreview}" />
+        <ContentControl Margin="10" Grid.Column="1"  prism:RegionManager.RegionName="{Binding Source={StaticResource KnownRegions}, Path=ColorPicker}" />
     </Grid>
 </Controls:MetroWindow>

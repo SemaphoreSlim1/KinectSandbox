@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KinectSandbox.Common.Colors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace KinectSandbox.Capture.ColorMapping
 
     public interface IColorMap
     {
-        void Init(UInt16 minReliable, UInt16 maxReliable, IEnumerable<RGB> colors);
+        void Init(UInt16 minReliable, UInt16 maxReliable);
 
         RGB GetColorForDepth(int x, int y, UInt16 depth);       
     }
