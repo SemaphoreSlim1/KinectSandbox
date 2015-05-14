@@ -75,7 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Subscription\Subscriber.cs" />
+    <Compile Include="Subscription\DelegateCommandExtensions.cs" />
     <Compile Include="Initialization\IVmInit.cs" />
     <Compile Include="Initialization\VmInit.cs" />
     <Compile Include="Property\IPropertyStore.cs" />

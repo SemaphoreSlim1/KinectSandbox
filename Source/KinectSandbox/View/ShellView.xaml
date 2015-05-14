@@ -5,14 +5,98 @@
                       xmlns:prism="http://www.codeplex.com/prism"
                       Title="MainWindow"
                       ResizeMode="CanResizeWithGrip"
+                      Style="{DynamicResource WindowStyle}"
                       Height="350" 
                       Width="525">
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <Style x:Key="WindowStyle" TargetType="{x:Type Controls:MetroWindow}">
+                <Setter Property="ShowTitleBar" Value="True" />
+                <Setter Property="ShowCloseButton" Value="True" />
+                <Setter Property="ShowMinButton" Value="True" />
+                <Setter Property="ShowMaxRestoreButton" Value="True" />
+                <Setter Property="WindowState" Value="Normal" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsFullScreen}" Value="True">
+                        <Setter Property="ShowTitleBar" Value="False" />
+                        <Setter Property="ShowCloseButton" Value="False" />
+                        <Setter Property="ShowMinButton" Value="False" />
+                        <Setter Property="WindowState" Value="Maximized" />
+                    </DataTrigger>                    
+                </Style.Triggers>
+            </Style>
+            
+            <Style x:Key="PreviewStyle" TargetType="{x:Type ContentControl}">
+                <Setter Property="Margin" Value="10" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsFullScreen}" Value="True">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard AccelerationRatio=".1" DecelerationRatio=".9">
+                                    <ThicknessAnimation To="0" Storyboard.TargetProperty="Margin" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard AccelerationRatio=".1" DecelerationRatio=".9">
+                                    <ThicknessAnimation To="10" Storyboard.TargetProperty="Margin" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Style.Triggers>                
+            </Style>
+                       
+            <Style x:Key="SidebarStyle" TargetType="{x:Type ContentControl}">
+                <Setter Property="Width" Value="200" />
+                <Setter Property="Opacity" Value="1" />
+                <Setter Property="Margin" Value="10" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsFullScreen}" Value="True">
+                        <DataTrigger.EnterActions>
+                            <BeginStoryboard>
+                                <Storyboard AccelerationRatio=".1" DecelerationRatio=".9">
+                                    <DoubleAnimation To="0" Storyboard.TargetProperty="Width" />
+                                    <DoubleAnimation To="0" Storyboard.TargetProperty="Opacity" />
+                                    <ThicknessAnimation To="0" Storyboard.TargetProperty="Margin" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <BeginStoryboard>
+                                <Storyboard AccelerationRatio=".1" DecelerationRatio=".9">
+                                    <DoubleAnimation To="200" Storyboard.TargetProperty="Width" />
+                                    <DoubleAnimation To="1" Storyboard.TargetProperty="Opacity" />
+                                    <ThicknessAnimation To="10" Storyboard.TargetProperty="Margin" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".75*"/>
-            <ColumnDefinition Width=".25*" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" />            
         </Grid.ColumnDefinitions>
-        <ContentControl Margin="10" Grid.Column="0"  prism:RegionManager.RegionName="{Binding Source={StaticResource KnownRegions}, Path=KinectPreview}" />
-        <ContentControl Margin="10" Grid.Column="1"  prism:RegionManager.RegionName="{Binding Source={StaticResource KnownRegions}, Path=ColorPicker}" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ContentControl Style="{StaticResource PreviewStyle}" 
+                        Grid.Column="0" Grid.RowSpan="2"
+                        prism:RegionManager.RegionName="{Binding Source={StaticResource KnownRegions}, Path=KinectPreview}" />
+        
+        <ContentControl Style="{StaticResource SidebarStyle}"
+                        Grid.Column="1"
+                        prism:RegionManager.RegionName="{Binding Source={StaticResource KnownRegions}, Path=Adjustment}" />
+        
+        <ContentControl Style="{StaticResource SidebarStyle}"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        prism:RegionManager.RegionName="{Binding Source={StaticResource KnownRegions}, Path=ColorPicker}" />
     </Grid>
 </Controls:MetroWindow>

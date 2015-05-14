@@ -78,7 +78,6 @@ namespace Prism.ViewModel.Property
                 this.eventAggregator.GetEvent<PropertyChangedEvent>().Publish(new PropertyChangedInfo() { 
                     Sender = owner,
                     PropertyName = propertyName,
-                    OldValue = oldValue,
                     NewValue = newValue
                 });
 
@@ -105,7 +104,6 @@ namespace Prism.ViewModel.Property
                 {
                     Sender = owner,
                     PropertyName = propertyName,
-                    OldValue = null,
                     NewValue = newValue
                 });
 

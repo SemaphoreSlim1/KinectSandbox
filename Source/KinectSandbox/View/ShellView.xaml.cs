@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using KinectSandbox.ViewModel;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,28 @@ namespace KinectSandbox.View
     /// </summary>
     public partial class ShellView : MetroWindow, IShellView
     {
-        public ShellView()
+        protected IShellViewModel ViewModel
+        {
+            get { return this.DataContext as IShellViewModel; }
+        }
+
+        public ShellView(IShellViewModel vm)
         {
             InitializeComponent();
+            this.DataContext = vm;
+            this.StateChanged += ShellView_StateChanged;
+        }
+
+        void ShellView_StateChanged(object sender, EventArgs e)
+        {
+            if(this.WindowState == WindowState.Maximized)
+            {
+                ViewModel.EnterFullScreen();
+            }
+            else
+            {
+                ViewModel.ExitFullScreen();
+            }
         }
     }
 }

@@ -18,15 +18,16 @@ namespace KinectSandbox.Common.Colors
             this.G = g;
             this.B = b;
         }
+              
 
         public static RGB Black
         {
-            get { return new RGB(byte.MaxValue, byte.MaxValue, byte.MaxValue); }
+            get { return new RGB(0,0,0); }
         }
 
         public static RGB White
         {
-            get { return new RGB(0, 0, 0); }
+            get { return new RGB(byte.MaxValue, byte.MaxValue, byte.MaxValue); }
         }
 
         public static RGB Red
@@ -46,17 +47,17 @@ namespace KinectSandbox.Common.Colors
 
         public static RGB Yellow
         {
-            get { return new RGB(255, 255, 0); }
+            get { return new RGB(byte.MaxValue, byte.MaxValue, 0); }
         }
 
         public static RGB Cyan
         {
-            get { return new RGB(0, 255, 255); }
+            get { return new RGB(0, byte.MaxValue, byte.MaxValue); }
         }
 
         public static RGB Magenta
         {
-            get { return new RGB(255, 0, 255); }
+            get { return new RGB(byte.MaxValue, 0, byte.MaxValue); }
         }
 
         public static RGB Silver

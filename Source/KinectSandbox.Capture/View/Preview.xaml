@@ -6,32 +6,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Viewbox>
-            <Border BorderBrush="Black" BorderThickness="1">
-                <Image Source="{Binding ImageSource}" Stretch="UniformToFill">
-                    <Image.Effect>
-                        <BlurEffect Radius="10" />
-                    </Image.Effect>
-                </Image>
-                <!--<ItemsControl Grid.Row="1" ItemsSource="{Binding BodyPoints}" Height="512" Width="424">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Ellipse Height="{Binding Height}" Width="{Binding Width}" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>-->
-            </Border>
-        </Viewbox>
+        <Image Source="{Binding ImageSource}" Stretch="Fill" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1" />
+                    <SkewTransform AngleX="{Binding Skew}" />
+                </TransformGroup>                
+            </Image.RenderTransform>
+        </Image>
     </Grid>
 </UserControl>

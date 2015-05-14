@@ -29,9 +29,13 @@ namespace KinectSandbox.Capture
             container.RegisterType<IPreview, Preview>();
             container.RegisterType<IPreviewViewModel, PreviewViewModel>();
 
+            container.RegisterType<IAdjustmentView, AdjustmentView>();
+            container.RegisterType<IAdjustmentViewModel, AdjustmentViewModel>();
+
             container.RegisterType<IColorMap, ConfigurableColorMap>();
 
             regionManager.RegisterViewWithRegion(KnownRegion.Named.KinectPreview, typeof(IPreview));
+            regionManager.RegisterViewWithRegion(KnownRegion.Named.Adjustment, typeof(IAdjustmentView));
         }
     }
 }

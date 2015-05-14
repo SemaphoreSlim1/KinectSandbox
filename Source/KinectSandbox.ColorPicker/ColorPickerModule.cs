@@ -25,10 +25,11 @@ namespace KinectSandbox.ColorPicker
 
         public void Initialize()
         {
-            container.RegisterType<IndividualColorPicker>();
+            container.RegisterType<AllColorPicker>();
+            container.RegisterType<AllColorPickerViewModel>();
             container.RegisterType<IndividualColorPickerViewModel>();
 
-            regionManager.RegisterViewWithRegion(KnownRegion.Named.ColorPicker, typeof(IndividualColorPicker));
+            regionManager.RegisterViewWithRegion(KnownRegion.Named.ColorPicker, typeof(AllColorPicker));
         }
     }
 }

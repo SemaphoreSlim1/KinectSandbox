@@ -17,14 +17,14 @@ using System.Windows.Shapes;
 namespace KinectSandbox.ColorPicker.View
 {
     /// <summary>
-    /// Interaction logic for IndividualColorPicker.xaml
+    /// Interaction logic for AllColorPicker.xaml
     /// </summary>
-    public partial class IndividualColorPicker : UserControl
+    public partial class AllColorPicker : UserControl
     {
-        public IndividualColorPicker(IndividualColorPickerViewModel viewModel)
+        public AllColorPicker(AllColorPickerViewModel vm)
         {
             InitializeComponent();
-            this.DataContext = viewModel;
+            this.DataContext = vm;
         }
     }
 }

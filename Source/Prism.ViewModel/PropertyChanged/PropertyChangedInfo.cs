@@ -22,11 +22,6 @@ namespace Prism.ViewModel.PropertyChanged
         public String PropertyName { get; set; }
 
         /// <summary>
-        /// Gets and sets the old value of the property
-        /// </summary>
-        public Object OldValue { get; set; }
-
-        /// <summary>
         /// Gets and sets the new value of the property
         /// </summary>
         public Object NewValue { get; set; }

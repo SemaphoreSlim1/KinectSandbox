@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KinectSandbox.ViewModel
+namespace KinectSandbox.Capture.ViewModel
 {
-    public interface IShellViewModel
+    public interface IAdjustmentViewModel
     {
-        void EnterFullScreen();
-        void ExitFullScreen();
+        int Skew { get; set; }
     }
 }

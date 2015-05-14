@@ -10,11 +10,6 @@ namespace KinectSandbox.Capture.ViewModel
     public interface IPreviewViewModel
     {
         /// <summary>
-        /// Gets and sets the connection status of the kinect sensor
-        /// </summary>
-        String StatusText { get; set; }
-
-        /// <summary>
         /// Gets the bitmap to display
         /// </summary>
         ImageSource ImageSource { get; }        

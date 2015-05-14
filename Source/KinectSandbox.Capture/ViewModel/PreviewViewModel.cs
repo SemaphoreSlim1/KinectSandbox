@@ -2,12 +2,14 @@
 using KinectSandbox.Common;
 using KinectSandbox.Common.Colors;
 using Microsoft.Kinect;
+using Microsoft.Practices.Prism.PubSubEvents;
 using Prism.ViewModel;
 using Prism.ViewModel.Initialization;
 using Prism.ViewModel.PropertyChanged;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,6 +23,8 @@ namespace KinectSandbox.Capture.ViewModel
 {
     public class PreviewViewModel : ViewModelBase, IPreviewViewModel
     {
+        #region Member variables
+
         private IColorMap colorMap;
 
         private KinectSensor sensor;
@@ -52,6 +56,9 @@ namespace KinectSandbox.Capture.ViewModel
         /// </summary>
         private int Height { get; set; }
 
+        #endregion
+
+        #region Image Source property
 
         /// <summary>
         /// The bitmap to display
@@ -63,14 +70,9 @@ namespace KinectSandbox.Capture.ViewModel
             get { return Bitmap; }
         }
 
-        /// <summary>
-        /// Gets and sets the kinect connection status
-        /// </summary>
-        public String StatusText
-        {
-            get { return Get<String>(); }
-            set { Set(value); }
-        }
+        #endregion
+
+        #region Body points
 
         private ObservableCollection<CanvasPoint> bodyPoints;
 
@@ -85,6 +87,24 @@ namespace KinectSandbox.Capture.ViewModel
             }
         }
 
+        #endregion
+
+
+        #region Skew Property
+
+        /// <summary>
+        /// Gets and sets the skew to apply to the image
+        /// </summary>
+        [DefaultValue(0)]
+        public int Skew
+        {
+            get { return Get<int>(); }
+            set { Set(value); }
+        }
+
+        #endregion
+
+
         public PreviewViewModel(IVmInit init, IColorMap colorMap)
             : base(init)
         {
@@ -92,7 +112,14 @@ namespace KinectSandbox.Capture.ViewModel
 
             InitKinect();
 
-            this.StatusText = this.sensor.IsAvailable ? KinectStatus.StatusText.Available : KinectStatus.StatusText.NotAvailable;
+            //this.StatusText = this.sensor.IsAvailable ? KinectStatus.StatusText.Available : KinectStatus.StatusText.NotAvailable;
+
+            this.eventAggregator.GetEvent<PropertyChangedEvent>().Subscribe(UpdateSkew, ThreadOption.PublisherThread, false, info => info.Sender != this && info.PropertyName == "Skew");
+        }
+
+        private void UpdateSkew(PropertyChangedInfo info)
+        {
+            this.Skew = (int)info.NewValue;
         }
 
         private void InitKinect()
@@ -197,101 +224,17 @@ namespace KinectSandbox.Capture.ViewModel
 
             Bitmap.Unlock();
 
-
             this.eventAggregator.GetEvent<PropertyChangedEvent>().Publish(new PropertyChangedInfo()
             {
                 Sender = this,
                 PropertyName = "ImageSource"
             });
         }
-
-
-        void reader_DepthFrameArrived(object sender, DepthFrameArrivedEventArgs e)
-        {
-            using (var depthFrame = e.FrameReference.AcquireFrame())
-            {
-                if (depthFrame == null)
-                { return; } //nothing to see here. Move along.
-
-                var minDepth = depthFrame.DepthMinReliableDistance;
-                var maxDepth = depthFrame.DepthMaxReliableDistance;
-
-                if (Bitmap == null)
-                { InitBitmap(); }
-
-                depthFrame.CopyFrameDataToArray(DepthData);
-
-                // Convert the depth to RGB.
-                int colorIndex = 0;
-
-
-                //depthdata.length = 512*424 = 217088
-             
-
-                //var x = 0;
-                //var y = 0;
-
-                //for (int depthIndex = 0; depthIndex < DepthData.Length; depthIndex++)
-                //{
-                //    // Get the depth for this pixel
-                //    ushort depth = DepthData[depthIndex];
-
-                //    RGB color;
-
-                //    //if (y > HalfHeight - 5 && y < HalfHeight + 5)
-                //    //{
-                //    //    color = RGB.Lime;
-                //    //}else
-                //    //{
-
-                //    //}
-
-                //    //var hypDepthIndex = (512 * y) + x + y;
-
-                //    color = colorMap.GetColorForDepth(x, y, depth);
-
-                //    Pixels[colorIndex++] = color.B; // Blue
-                //    Pixels[colorIndex++] = color.G; // Lime
-                //    Pixels[colorIndex++] = color.R; // Red
-
-                //    colorIndex++;
-
-                //    if (x >= Width)
-                //    {
-                //        x = 0;
-                //        y++;
-                //        if(y > maxY)
-                //        { 
-                //            maxY = y;
-                //            Console.WriteLine("Max Y = " + maxY);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        x++;
-                //    }
-                //}
-
-                Bitmap.Lock();
-
-                Marshal.Copy(Pixels, 0, Bitmap.BackBuffer, Pixels.Length);
-                Bitmap.AddDirtyRect(new Int32Rect(0, 0, Width, Height));
-
-                Bitmap.Unlock();
-            }
-
-            this.eventAggregator.GetEvent<PropertyChangedEvent>().Publish(new PropertyChangedInfo()
-            {
-                Sender = this,
-                PropertyName = "ImageSource"
-            });
-        }
-
-
+       
         void sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e)
         {
             //this.SensorAvailable = e.IsAvailable;
-            this.StatusText = this.sensor.IsAvailable ? KinectStatus.StatusText.Available : KinectStatus.StatusText.NotAvailable;
+            //this.StatusText = this.sensor.IsAvailable ? KinectStatus.StatusText.Available : KinectStatus.StatusText.NotAvailable;
         }
     }
 }

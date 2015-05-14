@@ -27,6 +27,23 @@ namespace KinectSandbox.Capture.ColorMapping
             this.eventAggregator = eventAggregator;
             this.LayerConfiguration = new Dictionary<SupportedColorLayer, LayerValueRange>();
             this.DepthColors = new Dictionary<UInt16, RGB>();
+
+            UInt16 current = 500;
+            foreach (SupportedColorLayer colorLayer in Enum.GetValues(typeof(SupportedColorLayer)))
+            {
+                LayerConfiguration[colorLayer] = new LayerValueRange()
+                {
+                    Layer = colorLayer,
+                    MinValue = current,
+                    MaxValue = (UInt16)(current + 50),
+                    Color = RGB.Blue
+                };
+
+                current += 50;
+            }
+
+            RecomputeDepthColors();
+
             this.eventAggregator.GetEvent<LayerValueChanged>().Subscribe(UpdateLayerConfiguration,ThreadOption.BackgroundThread,false);
         }
 
@@ -58,22 +75,6 @@ namespace KinectSandbox.Capture.ColorMapping
         {      
             this.minReliable = minReliable;
             this.maxReliable = maxReliable;
-
-            UInt16 current = 500;
-            foreach (SupportedColorLayer colorLayer in Enum.GetValues(typeof(SupportedColorLayer)))
-            {
-                LayerConfiguration[colorLayer] = new LayerValueRange()
-                {
-                    Layer = colorLayer,
-                    MinValue = current,
-                    MaxValue = (UInt16)(current + 50),
-                    Color = RGB.Blue
-                };
-
-                current += 50;
-            }
-
-            RecomputeDepthColors();
         }
 
         public RGB GetColorForDepth(int x, int y, UInt16 depth)

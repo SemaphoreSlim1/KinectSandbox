@@ -21,7 +21,7 @@ namespace KinectSandbox.ColorPicker.ViewModel
             var blue = RGB.Blue;
             this.SelectedColor = Color.FromRgb(blue.R, blue.G, blue.B);
 
-            this.eventAggregator.GetEvent<PropertyChangedEvent>().Subscribe(NotifyColorChange,ThreadOption.PublisherThread,false,info => info.Sender == this && info.PropertyName == "SelectedColor" );                                 
+            this.eventAggregator.GetEvent<PropertyChangedEvent>().Subscribe(NotifyColorChange,ThreadOption.PublisherThread,false,info => info.Sender == this && (info.PropertyName == "SelectedColor" || info.PropertyName == "MinValue" || info.PropertyName == "MaxValue") );                                 
 
             this.SelectedLayer = SupportedColorLayer.Layer1;
         }
@@ -57,7 +57,7 @@ namespace KinectSandbox.ColorPicker.ViewModel
         #region LayerName Property
 
         /// <summary>
-        /// Gets and sets the name of the layer
+        /// Gets (and privately sets) the name of the layer
         /// </summary>
         [DefaultValue("")]
         public String LayerName

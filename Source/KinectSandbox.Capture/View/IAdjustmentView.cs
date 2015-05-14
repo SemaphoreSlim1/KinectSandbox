@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KinectSandbox.ViewModel
+namespace KinectSandbox.Capture.View
 {
-    public interface IShellViewModel
+    public interface IAdjustmentView 
     {
-        void EnterFullScreen();
-        void ExitFullScreen();
     }
 }
