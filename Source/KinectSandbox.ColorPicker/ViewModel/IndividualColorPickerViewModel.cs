@@ -16,13 +16,10 @@ namespace KinectSandbox.ColorPicker.ViewModel
 {
     public class IndividualColorPickerViewModel : ViewModelBase
     {
-        public IndividualColorPickerViewModel(IVmInit init) : base(init)
+        public IndividualColorPickerViewModel(IVmInit init, String id) : base(init, id)
         {
             var blue = RGB.Blue;
-            this.SelectedColor = Color.FromRgb(blue.R, blue.G, blue.B);
-
-            this.eventAggregator.GetEvent<PropertyChangedEvent>().Subscribe(NotifyColorChange,ThreadOption.PublisherThread,false,info => info.Sender == this && (info.PropertyName == "SelectedColor" || info.PropertyName == "MinValue" || info.PropertyName == "MaxValue") );                                 
-
+            this.SelectedColor = Color.FromRgb(blue.R, blue.G, blue.B);            
             this.SelectedLayer = SupportedColorLayer.Layer1;
         }
 
@@ -36,6 +33,10 @@ namespace KinectSandbox.ColorPicker.ViewModel
             }); 
         }
 
+        public void InitCompleted()
+        {
+            this.eventAggregator.GetEvent<PropertyChangedEvent>().Subscribe(NotifyColorChange, ThreadOption.PublisherThread, false, info => info.Sender == this && (info.PropertyName == "SelectedColor" || info.PropertyName == "MinValue" || info.PropertyName == "MaxValue"));
+        }
 
         #region SupportedColorLayer Property
 

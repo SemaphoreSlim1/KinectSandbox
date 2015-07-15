@@ -64,6 +64,7 @@ namespace KinectSandbox.Capture.ColorMapping
                         
             Parallel.ForEach(layerKeys, key => {
                 var config = LayerConfiguration[key];
+               
                 for (var i = config.MinValue; i <= config.MaxValue; i++)
                 {
                     DepthColors[i] = config.Color;

@@ -11,7 +11,7 @@ namespace KinectSandbox.Capture.ViewModel
 {
     public class AdjustmentViewModel : ViewModelBase, IAdjustmentViewModel
     {
-        public AdjustmentViewModel(IVmInit init) : base(init)
+        public AdjustmentViewModel(IVmInit init) : base(init, "Adjustment")
         { }
 
         #region Skew Property

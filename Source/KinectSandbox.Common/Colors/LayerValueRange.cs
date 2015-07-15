@@ -18,5 +18,7 @@ namespace KinectSandbox.Common.Colors
         public UInt16 MinValue { get; set; }
 
         public UInt16 MaxValue { get; set; }
+
+        
     }
 }

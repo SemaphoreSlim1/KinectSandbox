@@ -66,6 +66,9 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -75,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Property\FilePropertyStore.cs" />
     <Compile Include="Subscription\DelegateCommandExtensions.cs" />
     <Compile Include="Initialization\IVmInit.cs" />
     <Compile Include="Initialization\VmInit.cs" />
@@ -84,7 +88,7 @@
     <Compile Include="PropertyChanged\PropertyChangedInfo.cs" />
     <Compile Include="PropertyChanging\PropertyChangingEvent.cs" />
     <Compile Include="PropertyChanging\PropertyChangingInfo.cs" />
-    <Compile Include="Property\PropertyStore.cs" />
+    <Compile Include="Property\MemoryPropertyStore.cs" />
     <Compile Include="Property\PropertyValue.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="ViewModelModule.cs" />

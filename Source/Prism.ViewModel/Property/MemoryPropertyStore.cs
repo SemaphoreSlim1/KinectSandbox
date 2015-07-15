@@ -10,24 +10,24 @@ using System.Threading.Tasks;
 
 namespace Prism.ViewModel.Property
 {
-    public sealed class PropertyStore : IPropertyStore
+    public class MemoryPropertyStore : IPropertyStore
     {
-        private Object owner;
-        private readonly IDictionary<String, PropertyValue> propertyStore;
-        private readonly IEventAggregator eventAggregator;
+        protected ViewModelBase owner;
+        protected readonly IDictionary<String, PropertyValue> propertyStore;
+        protected readonly IEventAggregator eventAggregator;
 
-        public PropertyStore(IEventAggregator eventAggregator)
+        public MemoryPropertyStore(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
             this.propertyStore = new Dictionary<String, PropertyValue>();
         }
 
-        public void DeclareOwner(Object owner)
+        public virtual void DeclareOwner(ViewModelBase owner)
         {
             this.owner = owner;
         }
 
-        public T Get<T>(String propertyName)
+        public virtual T Get<T>(String propertyName)
         {
             if (propertyStore.ContainsKey(propertyName))
             {
@@ -38,6 +38,7 @@ namespace Prism.ViewModel.Property
 
                 //not so ahppy path - we have it in the store, but it's not initialized
                 propertyStore[propertyName].Value = GetDefaultValue<T>(propertyName);
+                propertyStore[propertyName].ValueType = typeof(T);
                 propertyStore[propertyName].IsInitialized = true;
             }
             else
@@ -46,6 +47,7 @@ namespace Prism.ViewModel.Property
                 propertyStore[propertyName] = new PropertyValue()
                 {
                     Value = GetDefaultValue<T>(propertyName),
+                    ValueType = typeof(T),
                     IsInitialized = true
                 };                
             }
@@ -53,7 +55,7 @@ namespace Prism.ViewModel.Property
             return (T)propertyStore[propertyName].Value;
         }
         
-        public Boolean Set(String propertyName, Object newValue)
+        public virtual Boolean Set(String propertyName, Object newValue)
         {
             if (propertyStore.ContainsKey(propertyName))
             {
@@ -63,7 +65,6 @@ namespace Prism.ViewModel.Property
                     { return false; } //the values are equal, no need to proceed further                    
                 }
 
-                //an uninitialized property value - set it, and mark it init'd
                 var oldValue = propertyStore[propertyName].Value;
                 this.eventAggregator.GetEvent<PropertyChangingEvent>().Publish(new PropertyChangingInfo() { 
                     Sender = owner,
@@ -73,7 +74,6 @@ namespace Prism.ViewModel.Property
                 });
 
                 propertyStore[propertyName].Value = newValue;
-                propertyStore[propertyName].IsInitialized = true;
 
                 this.eventAggregator.GetEvent<PropertyChangedEvent>().Publish(new PropertyChangedInfo() { 
                     Sender = owner,
@@ -97,6 +97,7 @@ namespace Prism.ViewModel.Property
                 propertyStore[propertyName] = new PropertyValue()
                 {
                     Value = newValue,
+                    ValueType = newValue.GetType(),
                     IsInitialized = true
                 };
 
@@ -108,7 +109,6 @@ namespace Prism.ViewModel.Property
                 });
 
                 return true;
-
             }            
         }
 
@@ -118,7 +118,7 @@ namespace Prism.ViewModel.Property
         /// <typeparam name="T">The type of the property</typeparam>
         /// <param name="propertyName">The name of the property</param>
         /// <returns>the default value for the specified property</returns>
-        private T GetDefaultValue<T>(String propertyName)
+        protected T GetDefaultValue<T>(String propertyName)
         {
             var propertyInfo = owner.GetType().GetProperty(propertyName);
             var defaultAttributes = propertyInfo.GetCustomAttributes(typeof(DefaultValueAttribute), false) as DefaultValueAttribute[];

@@ -9,10 +9,10 @@ namespace Prism.ViewModel.Property
     public interface IPropertyStore
     {
         /// <summary>
-        /// Declares the object which "owns" this property store
+        /// Declares the view model which "owns" this property store
         /// </summary>
         /// <param name="owner">The object which owns this property store</param>
-        void DeclareOwner(Object owner);
+        void DeclareOwner(ViewModelBase owner);
 
         /// <summary>
         /// Gets the value from the backing store, using default values from the owner if this is the first retrieval
@@ -29,6 +29,5 @@ namespace Prism.ViewModel.Property
         /// <param name="value">The new value</param>
         /// <returns>True, if the value was updated in the backing store</returns>
         Boolean Set(String propertyName, Object value);
-
     }
 }

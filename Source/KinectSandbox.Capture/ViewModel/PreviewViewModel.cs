@@ -88,8 +88,7 @@ namespace KinectSandbox.Capture.ViewModel
         }
 
         #endregion
-
-
+        
         #region Skew Property
 
         /// <summary>
@@ -104,9 +103,8 @@ namespace KinectSandbox.Capture.ViewModel
 
         #endregion
 
-
         public PreviewViewModel(IVmInit init, IColorMap colorMap)
-            : base(init)
+            : base(init, "Preview")
         {
             this.colorMap = colorMap;
 

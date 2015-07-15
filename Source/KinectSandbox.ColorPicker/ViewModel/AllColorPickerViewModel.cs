@@ -13,23 +13,23 @@ namespace KinectSandbox.ColorPicker.ViewModel
 {
     public class AllColorPickerViewModel : ViewModelBase
     {
-        public AllColorPickerViewModel(IVmInit init) : base(init) 
+        public AllColorPickerViewModel(IVmInit init) : base(init, "AllColorPicker") 
         {
-
             //init the layer collection
             var layers = new List<IndividualColorPickerViewModel>();
 
             var supportedLayers = Enum.GetValues(typeof(SupportedColorLayer)).Cast<SupportedColorLayer>().OrderBy(layer => layer);
-            var current = 500;
+            int current = 500;
 
             foreach(var layer in supportedLayers)
             {
                 var initValues = ServiceLocator.Current.GetInstance<IVmInit>();
-                var layerVM = new IndividualColorPickerViewModel(initValues);
+                var layerVM = new IndividualColorPickerViewModel(initValues, layer.ToString());
                 layerVM.SelectedLayer = layer;
                 layerVM.SelectedColor = Color.FromRgb(RGB.Blue.R, RGB.Blue.G, RGB.Blue.B);
                 layerVM.MinValue = current;
                 layerVM.MaxValue = current += 50;
+                layerVM.InitCompleted();
                 layers.Add(layerVM);
             }
 

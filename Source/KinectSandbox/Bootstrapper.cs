@@ -39,7 +39,7 @@ namespace KinectSandbox
         }
 
         protected override void ConfigureContainer()
-        {
+        { 
             base.ConfigureContainer();
 
             Container.AddNewExtension<Interception>();
@@ -47,7 +47,7 @@ namespace KinectSandbox
             Container.RegisterType<IShellView, ShellView>();
             Container.RegisterType<IShellViewModel, ShellViewModel>();
 
-            Container.RegisterType<IPropertyStore, PropertyStore>(new PerResolveLifetimeManager());
+            Container.RegisterType<IPropertyStore, MemoryPropertyStore>(new PerResolveLifetimeManager());
             Container.RegisterType<IVmInit, VmInit>(new PerResolveLifetimeManager());
         }
 

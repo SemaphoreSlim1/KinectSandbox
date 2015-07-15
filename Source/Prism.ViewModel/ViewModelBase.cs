@@ -17,6 +17,11 @@ namespace Prism.ViewModel
     public abstract class ViewModelBase : INotifyPropertyChanging, INotifyPropertyChanged
     {
         /// <summary>
+        /// Gets (and privately sets) the ID of this view model
+        /// </summary>
+        public String ID { get; private set; }
+
+        /// <summary>
         /// Non-cancelable notification that occurs when a property value is about to change
         /// </summary>
         public event PropertyChangingEventHandler PropertyChanging;
@@ -36,8 +41,13 @@ namespace Prism.ViewModel
         /// </summary>
         protected readonly IEventAggregator eventAggregator;
 
-        protected ViewModelBase(IVmInit init)
+        protected ViewModelBase(IVmInit init, String id = null)
         {
+            if (String.IsNullOrWhiteSpace(id))
+            { this.ID = Guid.NewGuid().ToString(); }
+            else
+            { this.ID = id; }
+
             this.propertyStore = init.PropertyStore;
             this.propertyStore.DeclareOwner(this);
 
