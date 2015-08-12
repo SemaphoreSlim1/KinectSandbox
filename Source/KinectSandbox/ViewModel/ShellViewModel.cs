@@ -1,24 +1,13 @@
-﻿using Prism.ViewModel;
-using Prism.ViewModel.Initialization;
+﻿using Microsoft.Practices.Prism.PubSubEvents;
+using Prism.Mvvm;
+using Prism.Mvvm.Property;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace KinectSandbox.ViewModel
 {
     public class ShellViewModel : ViewModelBase, IShellViewModel
     {
-        public ShellViewModel(IVmInit init)
-            : base(init)
-        { }
-
-
-        #region IsFullScreen Property
-
         /// <summary>
         /// Gets and sets whether or not the app is in full screen mode
         /// </summary>
@@ -29,7 +18,9 @@ namespace KinectSandbox.ViewModel
             set { Set(value); }
         }
 
-        #endregion
+        public ShellViewModel(IPropertyStore propertyStore, IEventAggregator eventAggregator)
+            : base(propertyStore, eventAggregator)
+        { }
 
         public void EnterFullScreen()
         {

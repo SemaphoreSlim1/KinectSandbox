@@ -1,44 +1,16 @@
 ﻿using KinectSandbox.Common.Colors;
 using Microsoft.Practices.Prism.PubSubEvents;
-using Prism.ViewModel;
-using Prism.ViewModel.Initialization;
-using Prism.ViewModel.PropertyChanged;
+using Prism.Mvvm;
+using Prism.Mvvm.Events;
+using Prism.Mvvm.Property;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
-using Prism.ViewModel.Subscription;
 
 namespace KinectSandbox.ColorPicker.ViewModel
 {
     public class IndividualColorPickerViewModel : ViewModelBase
     {
-        public IndividualColorPickerViewModel(IVmInit init, String id) : base(init, id)
-        {
-            var blue = RGB.Blue;
-            this.SelectedColor = Color.FromRgb(blue.R, blue.G, blue.B);            
-            this.SelectedLayer = SupportedColorLayer.Layer1;
-        }
-
-        private void NotifyColorChange(PropertyChangedInfo e)
-        {
-            this.eventAggregator.GetEvent<LayerValueChanged>().Publish(new LayerValueRange() { 
-                Layer = this.SelectedLayer,
-                MinValue = (ushort)this.MinValue,
-                MaxValue = (ushort)this.MaxValue,
-                Color = new RGB(this.SelectedColor.R,this.SelectedColor.G,this.SelectedColor.B)
-            }); 
-        }
-
-        public void InitCompleted()
-        {
-            this.eventAggregator.GetEvent<PropertyChangedEvent>().Subscribe(NotifyColorChange, ThreadOption.PublisherThread, false, info => info.Sender == this && (info.PropertyName == "SelectedColor" || info.PropertyName == "MinValue" || info.PropertyName == "MaxValue"));
-        }
-
-        #region SupportedColorLayer Property
 
         /// <summary>
         /// Gets and sets the color layer that this picker represents
@@ -47,15 +19,12 @@ namespace KinectSandbox.ColorPicker.ViewModel
         public SupportedColorLayer SelectedLayer
         {
             get { return Get<SupportedColorLayer>(); }
-            set { 
+            set
+            {
                 Set(value);
                 LayerName = value.ToString();
             }
         }
-
-        #endregion
-
-        #region LayerName Property
 
         /// <summary>
         /// Gets (and privately sets) the name of the layer
@@ -67,10 +36,6 @@ namespace KinectSandbox.ColorPicker.ViewModel
             private set { Set(value); }
         }
 
-        #endregion
-        
-        #region MinValue Property
-
         /// <summary>
         /// Gets and sets the minimum value that this layer will color
         /// </summary>
@@ -80,10 +45,6 @@ namespace KinectSandbox.ColorPicker.ViewModel
             get { return Get<int>(); }
             set { Set(value); }
         }
-
-        #endregion
-        
-        #region MaxValue Property
 
         /// <summary>
         /// Gets and sets the maximum value this layer will color
@@ -95,10 +56,6 @@ namespace KinectSandbox.ColorPicker.ViewModel
             set { Set(value); }
         }
 
-        #endregion
-        
-        #region SelectedColor Property
-
         /// <summary>
         /// Gets and sets the selected color for this layer
         /// </summary>
@@ -108,6 +65,31 @@ namespace KinectSandbox.ColorPicker.ViewModel
             set { Set(value); }
         }
 
-        #endregion        
+        public IndividualColorPickerViewModel(IPropertyStore propertyStore, IEventAggregator eventAggregator) 
+            : base(propertyStore, eventAggregator)
+        {
+            var blue = RGB.Blue;
+            this.SelectedColor = Color.FromRgb(blue.R, blue.G, blue.B);            
+            this.SelectedLayer = SupportedColorLayer.Layer1;
+
+            this.eventAggregator.GetEvent<PropertyChangedEvent>()
+               .Subscribe(NotifyColorChange, ThreadOption.PublisherThread, false,
+               info => info.Sender == this
+               &&
+               (
+                   info.PropertyName == "SelectedColor"
+                   || info.PropertyName == "MinValue"
+                   || info.PropertyName == "MaxValue"));
+        }
+
+        private void NotifyColorChange(PropertyChangedInformation e)
+        {
+            this.eventAggregator.GetEvent<LayerValueChanged>().Publish(new LayerValueRange() { 
+                Layer = this.SelectedLayer,
+                MinValue = (ushort)this.MinValue,
+                MaxValue = (ushort)this.MaxValue,
+                Color = new RGB(this.SelectedColor.R,this.SelectedColor.G,this.SelectedColor.B)
+            }); 
+        }                                                                
     }
 }

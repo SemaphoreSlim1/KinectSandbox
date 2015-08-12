@@ -1,19 +1,14 @@
 ﻿using KinectSandbox.Capture.ColorMapping;
 using KinectSandbox.Common;
-using KinectSandbox.Common.Colors;
 using Microsoft.Kinect;
 using Microsoft.Practices.Prism.PubSubEvents;
-using Prism.ViewModel;
-using Prism.ViewModel.Initialization;
-using Prism.ViewModel.PropertyChanged;
+using Prism.Mvvm;
+using Prism.Mvvm.Events;
+using Prism.Mvvm.Property;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -103,8 +98,8 @@ namespace KinectSandbox.Capture.ViewModel
 
         #endregion
 
-        public PreviewViewModel(IVmInit init, IColorMap colorMap)
-            : base(init, "Preview")
+        public PreviewViewModel(IPropertyStore propertyStore, IEventAggregator eventAggregator, IColorMap colorMap)
+            : base(propertyStore, eventAggregator)
         {
             this.colorMap = colorMap;
 
@@ -112,10 +107,12 @@ namespace KinectSandbox.Capture.ViewModel
 
             //this.StatusText = this.sensor.IsAvailable ? KinectStatus.StatusText.Available : KinectStatus.StatusText.NotAvailable;
 
-            this.eventAggregator.GetEvent<PropertyChangedEvent>().Subscribe(UpdateSkew, ThreadOption.PublisherThread, false, info => info.Sender != this && info.PropertyName == "Skew");
+            this.eventAggregator.GetEvent<PropertyChangedEvent>()
+                .Subscribe(UpdateSkew, ThreadOption.PublisherThread, false, 
+                info => info.Sender != this && info.PropertyName == "Skew");
         }
 
-        private void UpdateSkew(PropertyChangedInfo info)
+        private void UpdateSkew(PropertyChangedInformation info)
         {
             this.Skew = (int)info.NewValue;
         }
@@ -222,11 +219,9 @@ namespace KinectSandbox.Capture.ViewModel
 
             Bitmap.Unlock();
 
-            this.eventAggregator.GetEvent<PropertyChangedEvent>().Publish(new PropertyChangedInfo()
-            {
-                Sender = this,
-                PropertyName = "ImageSource"
-            });
+            this.eventAggregator.GetEvent<PropertyChangedEvent>()
+                .Publish(new PropertyChangedInformation(this, "ImageSource", Bitmap));
+            
         }
        
         void sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e)

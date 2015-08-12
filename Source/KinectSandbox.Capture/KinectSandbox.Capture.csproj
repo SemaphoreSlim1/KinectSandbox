@@ -74,6 +74,10 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Prism.Mvvm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Mvvm.ViewModelBase.1.0.0\lib\Prism.Mvvm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -142,10 +146,6 @@
     <ProjectReference Include="..\KinectSandbox.Common\KinectSandbox.Common.csproj">
       <Project>{24a034ec-966a-4e35-ae15-fb4c9b3ba530}</Project>
       <Name>KinectSandbox.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Prism.ViewModel\Prism.ViewModel.csproj">
-      <Project>{8e44d354-99e1-47e9-8de8-b7971192a6f5}</Project>
-      <Name>Prism.ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

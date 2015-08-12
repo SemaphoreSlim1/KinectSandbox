@@ -44,7 +44,8 @@ namespace KinectSandbox.Capture.ColorMapping
 
             RecomputeDepthColors();
 
-            this.eventAggregator.GetEvent<LayerValueChanged>().Subscribe(UpdateLayerConfiguration,ThreadOption.BackgroundThread,false);
+            this.eventAggregator.GetEvent<LayerValueChanged>()
+                .Subscribe(UpdateLayerConfiguration,ThreadOption.BackgroundThread,false);
         }
 
         private void UpdateLayerConfiguration(LayerValueRange newValue)

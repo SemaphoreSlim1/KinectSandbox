@@ -1,19 +1,18 @@
 ﻿using KinectSandbox.Common.Colors;
-using Microsoft.Practices.ServiceLocation;
-using Prism.ViewModel;
-using Prism.ViewModel.Initialization;
+using Microsoft.Practices.Prism.PubSubEvents;
+using Prism.Mvvm;
+using Prism.Mvvm.Property;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace KinectSandbox.ColorPicker.ViewModel
 {
     public class AllColorPickerViewModel : ViewModelBase
     {
-        public AllColorPickerViewModel(IVmInit init) : base(init, "AllColorPicker") 
+        public AllColorPickerViewModel(IPropertyStore propertyStore, IEventAggregator eventAggregator, Func<IndividualColorPickerViewModel> colorPickerViewModelFactory) 
+            : base(propertyStore, eventAggregator) 
         {
             //init the layer collection
             var layers = new List<IndividualColorPickerViewModel>();
@@ -23,13 +22,11 @@ namespace KinectSandbox.ColorPicker.ViewModel
 
             foreach(var layer in supportedLayers)
             {
-                var initValues = ServiceLocator.Current.GetInstance<IVmInit>();
-                var layerVM = new IndividualColorPickerViewModel(initValues, layer.ToString());
+                var layerVM = colorPickerViewModelFactory();
                 layerVM.SelectedLayer = layer;
                 layerVM.SelectedColor = Color.FromRgb(RGB.Blue.R, RGB.Blue.G, RGB.Blue.B);
                 layerVM.MinValue = current;
-                layerVM.MaxValue = current += 50;
-                layerVM.InitCompleted();
+                layerVM.MaxValue = current += 50;                
                 layers.Add(layerVM);
             }
 

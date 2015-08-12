@@ -1,21 +1,12 @@
-﻿using Prism.ViewModel;
-using Prism.ViewModel.Initialization;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.Practices.Prism.PubSubEvents;
+using Prism.Mvvm;
+using Prism.Mvvm.Property;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KinectSandbox.Capture.ViewModel
 {
     public class AdjustmentViewModel : ViewModelBase, IAdjustmentViewModel
     {
-        public AdjustmentViewModel(IVmInit init) : base(init, "Adjustment")
-        { }
-
-        #region Skew Property
-
         /// <summary>
         /// Gets and sets the skew to apply to the preview
         /// </summary>
@@ -26,7 +17,10 @@ namespace KinectSandbox.Capture.ViewModel
             set { Set(value); }
         }
 
-        #endregion
+        public AdjustmentViewModel(IPropertyStore propertyStore, IEventAggregator eventAggregator)
+                : base(propertyStore, eventAggregator)
+        { }
+
 
     }
 }

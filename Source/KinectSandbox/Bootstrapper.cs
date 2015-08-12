@@ -4,17 +4,9 @@ using KinectSandbox.View;
 using KinectSandbox.ViewModel;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
-using Prism.ViewModel;
-using Prism.ViewModel.Initialization;
-using Prism.ViewModel.Property;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Prism.Mvvm.Property;
 using System.Windows;
 
 namespace KinectSandbox
@@ -26,7 +18,7 @@ namespace KinectSandbox
         /// </summary>        
         protected override DependencyObject CreateShell()
         {
-            return ServiceLocator.Current.GetInstance<IShellView>() as DependencyObject;
+            return Container.Resolve<IShellView>() as DependencyObject;            
         }
 
         /// <summary>
@@ -47,14 +39,12 @@ namespace KinectSandbox
             Container.RegisterType<IShellView, ShellView>();
             Container.RegisterType<IShellViewModel, ShellViewModel>();
 
-            Container.RegisterType<IPropertyStore, MemoryPropertyStore>(new PerResolveLifetimeManager());
-            Container.RegisterType<IVmInit, VmInit>(new PerResolveLifetimeManager());
+            Container.RegisterType<IPropertyStore, DictionaryPropertyStore>();
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
         {
-            var mc = new ModuleCatalog();
-            mc.AddModule(typeof(ViewModelModule));
+            var mc = new ModuleCatalog();            
             mc.AddModule(typeof(CaptureModule));
             mc.AddModule(typeof(ColorPickerModule));
 
