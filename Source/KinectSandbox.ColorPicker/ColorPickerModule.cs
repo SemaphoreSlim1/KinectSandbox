@@ -1,14 +1,9 @@
-﻿using KinectSandbox.ColorPicker.View;
-using KinectSandbox.ColorPicker.ViewModel;
+﻿
+using KinectSandbox.ColorPicker.AllColorPicker;
 using KinectSandbox.Common;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KinectSandbox.ColorPicker
 {
@@ -25,11 +20,11 @@ namespace KinectSandbox.ColorPicker
 
         public void Initialize()
         {
-            container.RegisterType<AllColorPicker>();
-            container.RegisterType<AllColorPickerViewModel>();
-            container.RegisterType<IndividualColorPickerViewModel>();
+            container.RegisterType<AllColorPickerView>();
+            container.RegisterType<IAllColorPickerViewModel, AllColorPickerViewModel>();
+            container.RegisterType<ILayeredColor, LayeredColorViewModel>();
 
-            regionManager.RegisterViewWithRegion(KnownRegion.Named.ColorPicker, typeof(AllColorPicker));
+            regionManager.RegisterViewWithRegion(KnownRegion.Named.ColorPicker, typeof(AllColorPickerView));
         }
     }
 }

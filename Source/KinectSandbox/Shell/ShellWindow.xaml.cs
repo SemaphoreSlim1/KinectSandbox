@@ -1,5 +1,4 @@
-﻿using KinectSandbox.ColorPicker.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KinectSandbox.ColorPicker.View
+namespace KinectSandbox.Shell
 {
     /// <summary>
-    /// Interaction logic for AllColorPicker.xaml
+    /// Interaction logic for ShellWindow.xaml
     /// </summary>
-    public partial class AllColorPicker : UserControl
+    public partial class ShellWindow
     {
-        public AllColorPicker(AllColorPickerViewModel vm)
+        public ShellWindow(IShellViewModel viewModel)
         {
             InitializeComponent();
-            this.DataContext = vm;
+            this.DataContext = viewModel;
         }
     }
 }

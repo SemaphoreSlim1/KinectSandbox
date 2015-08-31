@@ -1,9 +1,7 @@
-﻿using Microsoft.Practices.Prism.PubSubEvents;
-using Prism.Mvvm;
-using Prism.Mvvm.Property;
+﻿using DependencyViewModel;
 using System.ComponentModel;
 
-namespace KinectSandbox.Capture.ViewModel
+namespace KinectSandbox.Capture.Adjustment
 {
     public class AdjustmentViewModel : ViewModelBase, IAdjustmentViewModel
     {
@@ -17,10 +15,8 @@ namespace KinectSandbox.Capture.ViewModel
             set { Set(value); }
         }
 
-        public AdjustmentViewModel(IPropertyStore propertyStore, IEventAggregator eventAggregator)
-                : base(propertyStore, eventAggregator)
-        { }
-
-
+        public AdjustmentViewModel(IPropertyStore propertyStore)
+            :base(propertyStore)
+        {}
     }
 }

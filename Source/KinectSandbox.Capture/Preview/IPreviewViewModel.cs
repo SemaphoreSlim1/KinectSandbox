@@ -5,13 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace KinectSandbox.Capture.ViewModel
+namespace KinectSandbox.Capture.Preview
 {
     public interface IPreviewViewModel
     {
-        /// <summary>
-        /// Gets the bitmap to display
-        /// </summary>
-        ImageSource ImageSource { get; }        
+        ImageSource ImageSource { get; }
+        int Skew { get; }
     }
 }

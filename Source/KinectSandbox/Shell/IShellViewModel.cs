@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
-namespace KinectSandbox.View
+namespace KinectSandbox.Shell
 {
-    public interface IShellView
-    {
-    }
+    public interface IShellViewModel
+    {}
 }

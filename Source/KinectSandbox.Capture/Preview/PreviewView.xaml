@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="KinectSandbox.Capture.View.Preview"
+﻿<UserControl x:Class="KinectSandbox.Capture.Preview.PreviewView"             
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +11,7 @@
                 <TransformGroup>
                     <ScaleTransform ScaleX="-1" />
                     <SkewTransform AngleX="{Binding Skew}" />
-                </TransformGroup>                
+                </TransformGroup>
             </Image.RenderTransform>
         </Image>
     </Grid>

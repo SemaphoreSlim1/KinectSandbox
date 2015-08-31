@@ -1,25 +1,25 @@
-﻿using KinectSandbox.Capture.ColorMapping;
+﻿using DependencyViewModel;
+using KinectSandbox.Capture.ColorMapping;
 using KinectSandbox.Common;
+using KinectSandbox.Common.Events;
 using Microsoft.Kinect;
 using Microsoft.Practices.Prism.PubSubEvents;
-using Prism.Mvvm;
-using Prism.Mvvm.Events;
-using Prism.Mvvm.Property;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-
-namespace KinectSandbox.Capture.ViewModel
+namespace KinectSandbox.Capture.Preview
 {
     public class PreviewViewModel : ViewModelBase, IPreviewViewModel
     {
-        #region Member variables
-
         private IColorMap colorMap;
 
         private KinectSensor sensor;
@@ -34,8 +34,6 @@ namespace KinectSandbox.Capture.ViewModel
         /// </summary>
         private UInt16[] DepthData { get; set; }
 
-        private Body[] Bodies { get; set; }
-
         /// <summary>
         /// Returns the RGB pixel values.
         /// </summary>
@@ -49,11 +47,8 @@ namespace KinectSandbox.Capture.ViewModel
         /// <summary>
         /// Returns the height of the bitmap.
         /// </summary>
-        private int Height { get; set; }
-
-        #endregion
-
-        #region Image Source property
+        private int Height { get; set; }        
+      
 
         /// <summary>
         /// The bitmap to display
@@ -64,27 +59,7 @@ namespace KinectSandbox.Capture.ViewModel
         {
             get { return Bitmap; }
         }
-
-        #endregion
-
-        #region Body points
-
-        private ObservableCollection<CanvasPoint> bodyPoints;
-
-        public ObservableCollection<CanvasPoint> BodyPoints
-        {
-            get
-            {
-                if(bodyPoints == null)
-                { bodyPoints = new ObservableCollection<CanvasPoint>(); }
-
-                return bodyPoints;
-            }
-        }
-
-        #endregion
-        
-        #region Skew Property
+               
 
         /// <summary>
         /// Gets and sets the skew to apply to the image
@@ -96,35 +71,33 @@ namespace KinectSandbox.Capture.ViewModel
             set { Set(value); }
         }
 
-        #endregion
+        private readonly IEventAggregator eventAggregator;
 
-        public PreviewViewModel(IPropertyStore propertyStore, IEventAggregator eventAggregator, IColorMap colorMap)
-            : base(propertyStore, eventAggregator)
+        public PreviewViewModel(IPropertyStore propertyStore, IColorMap colorMap, IEventAggregator eventAggregator)
+            : base(propertyStore)
         {
             this.colorMap = colorMap;
+            this.eventAggregator = eventAggregator;
 
             InitKinect();
 
             //this.StatusText = this.sensor.IsAvailable ? KinectStatus.StatusText.Available : KinectStatus.StatusText.NotAvailable;
 
-            this.eventAggregator.GetEvent<PropertyChangedEvent>()
-                .Subscribe(UpdateSkew, ThreadOption.PublisherThread, false, 
-                info => info.Sender != this && info.PropertyName == "Skew");
+            this.eventAggregator.GetEvent<AdjustmentChangedEvent>()
+                .Subscribe(UpdateSkew, ThreadOption.BackgroundThread);
         }
 
-        private void UpdateSkew(PropertyChangedInformation info)
+        private void UpdateSkew(AdjustmentChangedInformation info)
         {
-            this.Skew = (int)info.NewValue;
+            this.Skew = info.Skew;
         }
 
         private void InitKinect()
         {
             sensor = KinectSensor.GetDefault();
             sensor.IsAvailableChanged += sensor_IsAvailableChanged;
-            reader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Depth | FrameSourceTypes.Body);
+            reader = sensor.OpenMultiSourceFrameReader(FrameSourceTypes.Depth);
             reader.MultiSourceFrameArrived += reader_FrameArrived;
-            
-            //colorMap.Init(r new RGB[] { RGB.Red, RGB.White });
 
             sensor.Open();
         }
@@ -135,35 +108,32 @@ namespace KinectSandbox.Capture.ViewModel
             Height = 424; //depthFrame.FrameDescription.Height;
 
             DepthData = new UInt16[Width * Height];
-            
+
 
             Pixels = new byte[DepthData.Length * Constants.BYTES_PER_PIXEL];
-            Bitmap = new WriteableBitmap(Width, Height, Constants.DPI, Constants.DPI, Constants.FORMAT, null);
-
-            Bodies = new Body[6];
+            Bitmap = new WriteableBitmap(Width, Height, Constants.DPI, Constants.DPI, Constants.FORMAT, null);            
         }
 
         void reader_FrameArrived(Object sender, MultiSourceFrameArrivedEventArgs e)
         {
             var multiSourceFrame = e.FrameReference.AcquireFrame();
-            
+
             if (multiSourceFrame == null)
             { return; }
 
-            var depthFrame = multiSourceFrame.DepthFrameReference.AcquireFrame();
-            var bodyFrame = multiSourceFrame.BodyFrameReference.AcquireFrame();
+            var depthFrame = multiSourceFrame.DepthFrameReference.AcquireFrame();              
 
-            if (depthFrame == null || bodyFrame == null)
+            if (depthFrame == null)
             { return; }
-            
+
             if (Bitmap == null)
-            { 
+            {
                 InitBitmap();
                 colorMap.Init(depthFrame.DepthMinReliableDistance, depthFrame.DepthMaxReliableDistance);
             }
 
             depthFrame.CopyFrameDataToArray(DepthData);
-            
+
             //This yeilds a black diagonal line where x==y - not sure why, but will look into later.
             //Parallel.For(0, Width, x =>
             //{
@@ -187,7 +157,7 @@ namespace KinectSandbox.Capture.ViewModel
             //});
 
 
-            
+
             var x = 0;
             var y = 0;
             for (var i = 0; i < DepthData.Length; i++)
@@ -210,7 +180,6 @@ namespace KinectSandbox.Capture.ViewModel
             }
 
             depthFrame.Dispose();
-            bodyFrame.Dispose();
 
             Bitmap.Lock();
 
@@ -219,11 +188,9 @@ namespace KinectSandbox.Capture.ViewModel
 
             Bitmap.Unlock();
 
-            this.eventAggregator.GetEvent<PropertyChangedEvent>()
-                .Publish(new PropertyChangedInformation(this, "ImageSource", Bitmap));
-            
+            OnPropertyChanged(()=>ImageSource);
         }
-       
+
         void sensor_IsAvailableChanged(object sender, IsAvailableChangedEventArgs e)
         {
             //this.SensorAvailable = e.IsAvailable;

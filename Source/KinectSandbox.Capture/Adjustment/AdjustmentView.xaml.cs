@@ -1,5 +1,4 @@
-﻿using KinectSandbox.Capture.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace KinectSandbox.Capture.View
+namespace KinectSandbox.Capture.Adjustment
 {
     /// <summary>
-    /// Interaction logic for Preview.xaml
+    /// Interaction logic for AdjustmentView.xaml
     /// </summary>
-    public partial class Preview : UserControl, IPreview
+    public partial class AdjustmentView : UserControl
     {
-        public Preview(IPreviewViewModel viewModel)
+        public AdjustmentView(IAdjustmentViewModel viewModel)
         {
             InitializeComponent();
             this.DataContext = viewModel;

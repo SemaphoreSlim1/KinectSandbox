@@ -17,8 +17,7 @@ namespace KinectSandbox.Common.Colors
             this.R = r;
             this.G = g;
             this.B = b;
-        }
-              
+        }              
 
         public static RGB Black
         {
@@ -108,20 +107,6 @@ namespace KinectSandbox.Common.Colors
             var b = (byte)(this.B * intensity);
 
             return new RGB(r, g, b);
-        }
-
-        //public static RGB operator +(RGB color1, RGB color2)
-        //{
-        //    return new RGB((byte)(color1.R + color2.R),
-        //        (byte)(color1.G + color2.G),
-        //        (byte)(color1.B + color2.B));
-        //}
-        //public static RGB operator -(RGB color1, RGB color2)
-        //{
-        //    return new RGB((byte)(color1.R - color2.R),
-        //        (byte)(color1.G - color2.G),
-        //        (byte)(color1.B - color2.B));
-        //}
-
+        }        
     }
 }

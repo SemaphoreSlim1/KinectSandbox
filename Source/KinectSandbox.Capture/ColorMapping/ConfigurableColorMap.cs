@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using KinectSandbox.Common;
 using System.Threading;
+using KinectSandbox.Common.Events;
 
 namespace KinectSandbox.Capture.ColorMapping
 {
@@ -18,37 +19,30 @@ namespace KinectSandbox.Capture.ColorMapping
 
         private IEventAggregator eventAggregator;
 
-        private Dictionary<SupportedColorLayer, LayerValueRange> LayerConfiguration;
+        private Dictionary<SupportedColorLayer, LayerValueInformation> LayerConfiguration;
         private Dictionary<UInt16, RGB> DepthColors;
         
 
         public ConfigurableColorMap(IEventAggregator eventAggregator)
         {
             this.eventAggregator = eventAggregator;
-            this.LayerConfiguration = new Dictionary<SupportedColorLayer, LayerValueRange>();
+            this.LayerConfiguration = new Dictionary<SupportedColorLayer, LayerValueInformation>();
             this.DepthColors = new Dictionary<UInt16, RGB>();
 
             UInt16 current = 500;
             foreach (SupportedColorLayer colorLayer in Enum.GetValues(typeof(SupportedColorLayer)))
             {
-                LayerConfiguration[colorLayer] = new LayerValueRange()
-                {
-                    Layer = colorLayer,
-                    MinValue = current,
-                    MaxValue = (UInt16)(current + 50),
-                    Color = RGB.Blue
-                };
-
+                LayerConfiguration[colorLayer] = new LayerValueInformation(colorLayer, RGB.Blue, current, (UInt16)(current + 50));                
                 current += 50;
             }
 
             RecomputeDepthColors();
 
-            this.eventAggregator.GetEvent<LayerValueChanged>()
+            this.eventAggregator.GetEvent<LayerValueChangedEvent>()
                 .Subscribe(UpdateLayerConfiguration,ThreadOption.BackgroundThread,false);
         }
 
-        private void UpdateLayerConfiguration(LayerValueRange newValue)
+        private void UpdateLayerConfiguration(LayerValueInformation newValue)
         {
             LayerConfiguration[newValue.Layer] = newValue;
             RecomputeDepthColors();

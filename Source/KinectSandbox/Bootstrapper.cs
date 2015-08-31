@@ -1,12 +1,13 @@
-﻿using KinectSandbox.Capture;
+﻿using DependencyViewModel;
+using KinectSandbox.Capture;
 using KinectSandbox.ColorPicker;
-using KinectSandbox.View;
-using KinectSandbox.ViewModel;
+using KinectSandbox.Shell;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
-using Prism.Mvvm.Property;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace KinectSandbox
@@ -18,7 +19,7 @@ namespace KinectSandbox
         /// </summary>        
         protected override DependencyObject CreateShell()
         {
-            return Container.Resolve<IShellView>() as DependencyObject;            
+            return Container.Resolve<ShellWindow>() as DependencyObject;            
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace KinectSandbox
 
             Container.AddNewExtension<Interception>();
 
-            Container.RegisterType<IShellView, ShellView>();
+            Container.RegisterType<ShellWindow>();
             Container.RegisterType<IShellViewModel, ShellViewModel>();
 
             Container.RegisterType<IPropertyStore, DictionaryPropertyStore>();
