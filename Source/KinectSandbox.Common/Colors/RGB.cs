@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KinectSandbox.Common.Colors
+﻿namespace KinectSandbox.Common.Colors
 {
     public struct RGB
     {
@@ -17,11 +11,11 @@ namespace KinectSandbox.Common.Colors
             this.R = r;
             this.G = g;
             this.B = b;
-        }              
+        }
 
         public static RGB Black
         {
-            get { return new RGB(0,0,0); }
+            get { return new RGB(0, 0, 0); }
         }
 
         public static RGB White
@@ -107,6 +101,6 @@ namespace KinectSandbox.Common.Colors
             var b = (byte)(this.B * intensity);
 
             return new RGB(r, g, b);
-        }        
+        }
     }
 }

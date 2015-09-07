@@ -111,7 +111,7 @@ namespace KinectSandbox.Capture.Preview
 
 
             Pixels = new byte[DepthData.Length * Constants.BYTES_PER_PIXEL];
-            Bitmap = new WriteableBitmap(Width, Height, Constants.DPI, Constants.DPI, Constants.FORMAT, null);            
+            Bitmap = new WriteableBitmap(Width, Height, Constants.DPI, Constants.DPI, PixelFormats.Bgr32, null);            
         }
 
         void reader_FrameArrived(Object sender, MultiSourceFrameArrivedEventArgs e)

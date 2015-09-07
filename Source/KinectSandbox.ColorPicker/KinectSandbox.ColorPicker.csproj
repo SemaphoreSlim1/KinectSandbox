@@ -149,18 +149,17 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\KinectSandbox.Common\KinectSandbox.Common.csproj">
+      <Project>{7a4a29d6-ce4e-4b2b-8d6b-ef6ca75a84ea}</Project>
+      <Name>KinectSandbox.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Page Include="AllColorPicker\AllColorPickerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\KinectSandbox.Common\KinectSandbox.Common.csproj">
-      <Project>{24a034ec-966a-4e35-ae15-fb4c9b3ba530}</Project>
-      <Name>KinectSandbox.Common</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

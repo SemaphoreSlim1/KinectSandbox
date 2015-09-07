@@ -182,7 +182,7 @@
       <Name>KinectSandbox.ColorPicker</Name>
     </ProjectReference>
     <ProjectReference Include="..\KinectSandbox.Common\KinectSandbox.Common.csproj">
-      <Project>{24a034ec-966a-4e35-ae15-fb4c9b3ba530}</Project>
+      <Project>{7a4a29d6-ce4e-4b2b-8d6b-ef6ca75a84ea}</Project>
       <Name>KinectSandbox.Common</Name>
     </ProjectReference>
   </ItemGroup>
