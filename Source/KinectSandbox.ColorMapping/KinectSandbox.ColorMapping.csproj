@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7A4A29D6-CE4E-4B2B-8D6B-EF6CA75A84EA}</ProjectGuid>
+    <ProjectGuid>{134DE8BF-8D7B-43F6-A287-88E2DBB1E24C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KinectSandbox.Common</RootNamespace>
-    <AssemblyName>KinectSandbox.Common</AssemblyName>
+    <RootNamespace>KinectSandbox.ColorMapping</RootNamespace>
+    <AssemblyName>KinectSandbox.ColorMapping</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,18 +35,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Colors\RGB.cs" />
-    <Compile Include="Colors\SupportedColorLayer.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Events\AdjustmentChangedEvent.cs" />
-    <Compile Include="Events\LayerValueChangedEvent.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="KinectStatus.cs" />
-    <Compile Include="KnownRegion.cs" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BlackAndWhiteColorMap.cs" />
+    <Compile Include="ConfigurableColorMap.cs" />
+    <Compile Include="IColorMap.cs" />
+    <Compile Include="LayeredColorMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="project.json" />
+    <ProjectReference Include="..\KinectSandbox.Common\KinectSandbox.Common.csproj">
+      <Project>{7a4a29d6-ce4e-4b2b-8d6b-ef6ca75a84ea}</Project>
+      <Name>KinectSandbox.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -4,9 +4,9 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 
-using KinectSandbox.Capture.ColorMapping;
 using KinectSandbox.Capture.Preview;
 using KinectSandbox.Capture.Adjustment;
+using KinectSandbox.ColorMapping;
 
 namespace KinectSandbox.Capture
 {

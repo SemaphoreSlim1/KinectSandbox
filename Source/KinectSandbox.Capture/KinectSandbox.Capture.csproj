@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KinectSandbox.Capture</RootNamespace>
     <AssemblyName>KinectSandbox.Capture</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -126,11 +127,6 @@
     <Compile Include="Adjustment\AdjustmentViewModel.cs" />
     <Compile Include="Adjustment\IAdjustmentViewModel.cs" />
     <Compile Include="CaptureModule.cs" />
-    <Compile Include="ColorMapping\BlackAndWhiteColorMap.cs" />
-    <Compile Include="ColorMapping\CanvasPoint.cs" />
-    <Compile Include="ColorMapping\ConfigurableColorMap.cs" />
-    <Compile Include="ColorMapping\IColorMap.cs" />
-    <Compile Include="ColorMapping\LayeredColorMap.cs" />
     <Compile Include="Preview\IPreviewViewModel.cs" />
     <Compile Include="Preview\PreviewView.xaml.cs">
       <DependentUpon>PreviewView.xaml</DependentUpon>
@@ -153,6 +149,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\KinectSandbox.ColorMapping\KinectSandbox.ColorMapping.csproj">
+      <Project>{134de8bf-8d7b-43f6-a287-88e2dbb1e24c}</Project>
+      <Name>KinectSandbox.ColorMapping</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KinectSandbox.Common\KinectSandbox.Common.csproj">
       <Project>{7a4a29d6-ce4e-4b2b-8d6b-ef6ca75a84ea}</Project>
       <Name>KinectSandbox.Common</Name>
