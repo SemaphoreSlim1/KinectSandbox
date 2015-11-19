@@ -9,9 +9,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KinectSandbox.Capture</RootNamespace>
     <AssemblyName>KinectSandbox.Capture</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DependencyViewModel, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DependencyViewModel.1.0.4\lib\portable-net45+wp8+win8\DependencyViewModel.dll</HintPath>
+    <Reference Include="DependencyViewModel, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DependencyViewModel.1.0.3\lib\DependencyViewModel.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -127,6 +126,11 @@
     <Compile Include="Adjustment\AdjustmentViewModel.cs" />
     <Compile Include="Adjustment\IAdjustmentViewModel.cs" />
     <Compile Include="CaptureModule.cs" />
+    <Compile Include="ColorMapping\BlackAndWhiteColorMap.cs" />
+    <Compile Include="ColorMapping\CanvasPoint.cs" />
+    <Compile Include="ColorMapping\ConfigurableColorMap.cs" />
+    <Compile Include="ColorMapping\IColorMap.cs" />
+    <Compile Include="ColorMapping\LayeredColorMap.cs" />
     <Compile Include="Preview\IPreviewViewModel.cs" />
     <Compile Include="Preview\PreviewView.xaml.cs">
       <DependentUpon>PreviewView.xaml</DependentUpon>
@@ -149,12 +153,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KinectSandbox.ColorMapping\KinectSandbox.ColorMapping.csproj">
-      <Project>{134de8bf-8d7b-43f6-a287-88e2dbb1e24c}</Project>
-      <Name>KinectSandbox.ColorMapping</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KinectSandbox.Common\KinectSandbox.Common.csproj">
-      <Project>{7a4a29d6-ce4e-4b2b-8d6b-ef6ca75a84ea}</Project>
+      <Project>{24a034ec-966a-4e35-ae15-fb4c9b3ba530}</Project>
       <Name>KinectSandbox.Common</Name>
     </ProjectReference>
   </ItemGroup>

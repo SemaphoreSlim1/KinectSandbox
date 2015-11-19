@@ -16,7 +16,7 @@ namespace KinectSandbox.Capture.Adjustment
         }
 
         public AdjustmentViewModel(IPropertyStore propertyStore)
-            : base(propertyStore)
-        { }
+            :base(propertyStore)
+        {}
     }
 }

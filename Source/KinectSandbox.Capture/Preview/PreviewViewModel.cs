@@ -1,12 +1,17 @@
 ﻿using DependencyViewModel;
-using KinectSandbox.ColorMapping;
+using KinectSandbox.Capture.ColorMapping;
 using KinectSandbox.Common;
 using KinectSandbox.Common.Events;
 using Microsoft.Kinect;
 using Microsoft.Practices.Prism.PubSubEvents;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -106,7 +111,7 @@ namespace KinectSandbox.Capture.Preview
 
 
             Pixels = new byte[DepthData.Length * Constants.BYTES_PER_PIXEL];
-            Bitmap = new WriteableBitmap(Width, Height, Constants.DPI, Constants.DPI, PixelFormats.Bgr32, null);            
+            Bitmap = new WriteableBitmap(Width, Height, Constants.DPI, Constants.DPI, Constants.FORMAT, null);            
         }
 
         void reader_FrameArrived(Object sender, MultiSourceFrameArrivedEventArgs e)

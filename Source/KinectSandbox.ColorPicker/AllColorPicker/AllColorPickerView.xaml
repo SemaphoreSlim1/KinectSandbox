@@ -6,8 +6,6 @@
              xmlns:local="clr-namespace:KinectSandbox.ColorPicker.AllColorPicker"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
-             xmlns:designTime="clr-namespace:KinectSandbox.ColorPicker.AllColorPicker.DesignTime"
-             d:DataContext="{d:DesignInstance designTime:AllColorPickerViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <ScrollViewer>

@@ -1,4 +1,10 @@
-﻿namespace KinectSandbox.Capture.Adjustment
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KinectSandbox.Capture.Adjustment
 {
     public interface IAdjustmentViewModel
     {
